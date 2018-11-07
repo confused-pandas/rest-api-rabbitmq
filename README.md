@@ -43,8 +43,6 @@ PREVU|EN COURS|PAUSE|FINI|REPORTE|ANNULE
   "exterieur": {
       "self": "http://localhost/equipes/13"
      }
-
-
 }
 ````
 Une équipe joue à domicile et l'autre à l'exterieur.
@@ -59,6 +57,7 @@ https://spring.io/guides/tutorials/bookmarks/
 2 - On veut pouvoir s'abonner au résultats en live d'une journée de championnat.
 Adaptez le service pour que lorsqu'un résultat est ajouté à la base, les clients intéressés par une des équipes concernées par le résultat
 reçoivent une notification du résultat grâce à un pattern publish/subscribe mis en place avec RabbitMQ.
+https://spring.io/guides/gs/messaging-rabbitmq/
 
 3 - Ecrivez un simple client Java qui s'abonne à un topic et qui reçoit les informations et les affiche dans la console au fur et à mesure
 
