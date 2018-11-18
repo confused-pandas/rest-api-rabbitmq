@@ -15,7 +15,7 @@ public class Match {
     private String nomEquipeB;
     private int scoreA;
     private int scoreB;
-    private Long idEquipeA;
+	private Long idEquipeA;
     private Long idEquipeB;
     private Statut statut;
 
@@ -37,5 +37,37 @@ public class Match {
                 "Match[id=%d, nomEquipeA='%s', nomEquipeB='%s', scoreA=%d, scoreB=%d, idEquipeA=%d, idEquipeB=%d, statut='%s']",
                 id, nomEquipeA, nomEquipeB, scoreA, scoreB, idEquipeA, idEquipeB, statut.statut());
     }
+    
+    public Long getId() {
+		return id;
+	}
+
+	public String getNomEquipeA() {
+		return nomEquipeA;
+	}
+
+	public String getNomEquipeB() {
+		return nomEquipeB;
+	}
+
+	public int getScoreA() {
+		return scoreA;
+	}
+
+	public int getScoreB() {
+		return scoreB;
+	}
+
+	public Long getIdEquipeA() {
+		return idEquipeA;
+	}
+
+	public Long getIdEquipeB() {
+		return idEquipeB;
+	}
+
+	public Statut getStatut() {
+		return statut;
+	}
 
 }
