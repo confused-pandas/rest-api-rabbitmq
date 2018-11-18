@@ -10,22 +10,44 @@ public class Equipe {
 	
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
-    private String name;
-    private String place;
+    private Long idEquipe;
+    private String nomEquipe;
+    private String villeEquipe;
+    private int nbPoints;
     
     protected Equipe() {}
     
-    public void Equipe(String name, String place) {
-    	this.name = name;
-    	this.place = place;
+    public Equipe(String nomEquipe, String villeEquipe, int nbPoints) {
+    	this.nomEquipe = nomEquipe;
+    	this.villeEquipe = villeEquipe;
+    	this.nbPoints = nbPoints;
     }
     
     @Override
     public String toString() {
         return String.format(
-                "Equipe[id=%d, name='%s', place='%s']",
-                id, name, place);
+                "Equipe[id=%d, nomEquipe='%s', villeEquipe='%s', nbPoints=%d]",
+                idEquipe, nomEquipe, villeEquipe, nbPoints);
     }
+
+	public Long getIdEquipe() {
+		return idEquipe;
+	}
+
+	public String getNomEquipe() {
+		return nomEquipe;
+	}
+
+	public String getVilleEquipe() {
+		return villeEquipe;
+	}
+
+	public int getNbPoints() {
+		return nbPoints;
+	}
+
+	public void setNbPoints(int nbPoints) {
+		this.nbPoints = nbPoints;
+	}
 
 }

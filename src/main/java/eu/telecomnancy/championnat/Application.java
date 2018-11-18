@@ -54,4 +54,46 @@ public class Application {
 		};
 	}
 
+	@Bean
+	public CommandLineRunner demoEquipe(EquipeRepository equipeRepository) {
+		return (args) -> {
+			// save a couple of equipe
+			
+			equipeRepository.save(new Equipe("PSG", "Paris", 0));
+			equipeRepository.save(new Equipe("OM", "Marseille", 0));
+			equipeRepository.save(new Equipe("ASNL", "Nancy", 0));
+			equipeRepository.save(new Equipe("Nîmes Olympique", "Nîmes", 0));
+			equipeRepository.save(new Equipe("FC Barcelone", "Barcelone", 0));
+			equipeRepository.save(new Equipe("Real Madrid", "Madrid", 0));
+			equipeRepository.save(new Equipe("AS Roma", "Rome", 0));
+			equipeRepository.save(new Equipe("Naples", "Naples", 0));
+			equipeRepository.save(new Equipe("Caen", "Caen", 0));
+			equipeRepository.save(new Equipe("Toulouse", "Toulouse", 0));
+
+			// fetch all equipe
+			log.info("Equipe found with findAll():");
+			log.info("-------------------------------");
+			for (Equipe equipe : equipeRepository.findAll()) {
+				log.info(equipe.toString());
+			}
+			log.info("");
+
+			// fetch an individual equipe by ID
+			equipeRepository.findById(1L)
+				.ifPresent(equipe -> {
+					log.info("Equipe found with findById(1L):");
+					log.info("--------------------------------");
+					log.info(equipe.toString());
+					log.info("");
+				});
+
+			// fetch customers by name
+			log.info("Equipe found with findByName(name):");
+			log.info("--------------------------------------------");
+			equipeRepository.findByName("Toulouse").forEach(equipe -> {
+				log.info(equipe.toString());
+			});
+			log.info("");
+		};
+	}
 }
