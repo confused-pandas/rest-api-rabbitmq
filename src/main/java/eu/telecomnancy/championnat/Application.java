@@ -55,7 +55,8 @@ public class Application {
 			log.info("");
 		};
 	}
-
+	
+	
 	@Bean
 	public CommandLineRunner demoEquipe(EquipeRepository equipeRepository) {
 		return (args) -> {
@@ -81,18 +82,16 @@ public class Application {
 			log.info("");
 
 			// fetch an individual equipe by ID
-			equipeRepository.findById(1L)
-				.ifPresent(equipe -> {
-					log.info("Equipe found with findById(1L):");
-					log.info("--------------------------------");
-					log.info(equipe.toString());
-					log.info("");
-				});
+			log.info("Equipe found with findByIdEquipe(15L)");
+			log.info("-------------------------------");
+			log.info(equipeRepository.findByIdEquipe(15L).toString());
+			log.info("");
+				
 
 			// fetch customers by name
-			log.info("Equipe found with findByName(name):");
+			log.info("Equipe found with findByNomEquipe(name):");
 			log.info("--------------------------------------------");
-			equipeRepository.findByName("Toulouse").forEach(equipe -> {
+			equipeRepository.findByNomEquipe("Toulouse").forEach(equipe -> {
 				log.info(equipe.toString());
 			});
 			log.info("");
@@ -107,7 +106,7 @@ public class Application {
 			competitionRepository.save(new Competition("Ligue 1", 4, list, list));
 
 			// fetch all competition
-			log.info("Compet found with findAll():");
+			log.info("Competition found with findAll():");
 			log.info("-------------------------------");
 			for (Competition competition : competitionRepository.findAll()) {
 				log.info(competition.toString());
@@ -117,19 +116,22 @@ public class Application {
 			// fetch an individual compet by ID
 			competitionRepository.findById(1L)
 				.ifPresent(competition -> {
-					log.info("Compet found with findById(1L):");
+					log.info("Competition found with findById(1L):");
 					log.info("--------------------------------");
 					log.info(competition.toString());
 					log.info("");
 				});
 
 			// fetch customers by name
-			log.info("Compet found with findByName(name):");
+			log.info("Competition found with findByNomCompetition(name):");
 			log.info("--------------------------------------------");
-			competitionRepository.findByName("Ligue1").forEach(competition -> {
+			competitionRepository.findByNomCompetition("Ligue1").forEach(competition -> {
 				log.info(competition.toString());
 			});
 			log.info("");
 		};
 	}
+	
+
+
 }

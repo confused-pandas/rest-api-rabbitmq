@@ -7,22 +7,22 @@ import javax.persistence.Id;
 
 @Entity
 public class Equipe {
-	
+
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long idEquipe;
     private String nomEquipe;
     private String villeEquipe;
     private int nbPoints;
-    
+
     protected Equipe() {}
-    
+
     public Equipe(String nomEquipe, String villeEquipe, int nbPoints) {
     	this.nomEquipe = nomEquipe;
     	this.villeEquipe = villeEquipe;
     	this.nbPoints = nbPoints;
     }
-    
+
     @Override
     public String toString() {
         return String.format(
@@ -45,9 +45,6 @@ public class Equipe {
 	public int getNbPoints() {
 		return nbPoints;
 	}
-
-	public void setNbPoints(int nbPoints) {
-		this.nbPoints = nbPoints;
-	}
+    
 
 }

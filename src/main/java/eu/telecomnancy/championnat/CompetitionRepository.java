@@ -1,10 +1,10 @@
 package eu.telecomnancy.championnat;
 
 import java.util.List;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CompetitionRepository extends CrudRepository<Competition, Long>{
+public interface CompetitionRepository extends JpaRepository<Competition, Long>{
 	
-	List<Competition> findByName(String nomCompetition);
+	List<Competition> findByNomCompetition(String nomCompetition);
 
 }
