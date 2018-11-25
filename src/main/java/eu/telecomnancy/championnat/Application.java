@@ -13,7 +13,10 @@ import org.springframework.context.annotation.Bean;
 public class Application {
 
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
-	public long[] list = { 0L, 1L, 2L, 3L };
+	public long[] listEquipe = { 0L, 1L, 2L, 3L };
+	public long[] listMatch = { 0L, 1L, 2L };
+	public long[] listEquipe2 = { 0L, 10L, 11L, 12L };
+	public long[] listMatch2 = { 3L, 4L, 5L };
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class);
@@ -23,11 +26,16 @@ public class Application {
 	public CommandLineRunner demo(MatchRepository repository) {
 		return (args) -> {
 			// save a couple of matches
-			repository.save(new Match("PSG", "OM", 1,0, 0L, 1L, Statut.PREVU));
+			repository.save(new Match("PSG", "OM", 1,0, 0L, 1L, Statut.FINI));
 			repository.save(new Match("ASNL", "Nîmes Olympique", 2,1,2L,3L, Statut.FINI));
+			repository.save(new Match("ASNL", "PSG", 1,3,2L,0L, Statut.FINI));
+			repository.save(new Match("PSG", "OL", 3,0, 0L, 10L, Statut.FINI));
+			repository.save(new Match("LOSC", "Montpellier", 4,1,11L,12L, Statut.FINI));
+			repository.save(new Match("LOSC", "PSG", 2,5,11L,0L, Statut.FINI));
 			repository.save(new Match("FC Barcelone", "Real Madrid", 3,3,4L,5L, Statut.ENCOURS));
 			repository.save(new Match("AS Roma", "Naples", 4,2,6L,7L, Statut.PAUSE));
 			repository.save(new Match("Caen", "Toulouse", 5,3,8L,9L, Statut.REPORTE));
+			repository.save(new Match("DFCO", "ASSE", 5,3,8L,9L, Statut.PREVU));
 
 			// fetch all matches
 			log.info("Match found with findAll():");
@@ -62,16 +70,21 @@ public class Application {
 		return (args) -> {
 			// save a couple of equipe
 			
-			equipeRepository.save(new Equipe("PSG", "Paris", 0));
-			equipeRepository.save(new Equipe("OM", "Marseille", 0));
-			equipeRepository.save(new Equipe("ASNL", "Nancy", 0));
-			equipeRepository.save(new Equipe("Nîmes Olympique", "Nîmes", 0));
-			equipeRepository.save(new Equipe("FC Barcelone", "Barcelone", 0));
-			equipeRepository.save(new Equipe("Real Madrid", "Madrid", 0));
-			equipeRepository.save(new Equipe("AS Roma", "Rome", 0));
-			equipeRepository.save(new Equipe("Naples", "Naples", 0));
-			equipeRepository.save(new Equipe("Caen", "Caen", 0));
-			equipeRepository.save(new Equipe("Toulouse", "Toulouse", 0));
+			equipeRepository.save(new Equipe("PSG", "Paris", 42));
+			equipeRepository.save(new Equipe("OM", "Marseille", 20));
+			equipeRepository.save(new Equipe("ASNL", "Nancy", 5));
+			equipeRepository.save(new Equipe("Nîmes Olympique", "Nîmes", 9));
+			equipeRepository.save(new Equipe("FC Barcelone", "Barcelone", 45));
+			equipeRepository.save(new Equipe("Real Madrid", "Madrid", 48));
+			equipeRepository.save(new Equipe("AS Roma", "Rome", 6));
+			equipeRepository.save(new Equipe("Naples", "Naples", 12));
+			equipeRepository.save(new Equipe("Caen", "Caen", 6));
+			equipeRepository.save(new Equipe("Toulouse", "Toulouse", 12));
+			equipeRepository.save(new Equipe("OL", "Lyon", 34));
+			equipeRepository.save(new Equipe("LOSC", "Lille", 28));
+			equipeRepository.save(new Equipe("Montpellier", "Montpellier", 3));
+			equipeRepository.save(new Equipe("ASSE", "Saint-Etienne", 28));
+			equipeRepository.save(new Equipe("DFCO", "Dijon", 21));
 
 			// fetch all equipe
 			log.info("Equipe found with findAll():");
@@ -103,7 +116,8 @@ public class Application {
 		return (args) -> {
 			// save a couple of competition
 			
-			competitionRepository.save(new Competition("Ligue 1", 4, list, list));
+			competitionRepository.save(new Competition("Ligue 1", 3, listEquipe, listMatch));
+			competitionRepository.save(new Competition("Ligue 2", 3, listEquipe2, listMatch2));
 
 			// fetch all competition
 			log.info("Competition found with findAll():");
