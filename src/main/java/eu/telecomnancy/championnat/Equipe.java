@@ -45,6 +45,10 @@ public class Equipe {
 	public int getNbPoints() {
 		return nbPoints;
 	}
+
+	public Long getId() {
+		return idEquipe;
+	}
     
 
 }

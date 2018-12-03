@@ -24,12 +24,12 @@ public class CompetitionController {
 	}
 	
 	@GetMapping("/competitions")
-	List<Competition> all() {
+	public List<Competition> all() {
 		return repository.findAll();
 	}	
 	
 	@GetMapping("/competitions/{id}")
-	Competition one(@PathVariable Long id) {
+	public Competition one(@PathVariable Long id) {
 
 		return repository.findById(id)
 			.orElseThrow(() -> new CompetitionNotFoundException(id));

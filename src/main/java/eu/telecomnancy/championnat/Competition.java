@@ -68,6 +68,10 @@ public class Competition {
 		this.listeIdMatch = listeIdMatch;
 	}
 
+	public Long getId() {
+		return idCompetition;
+	}
+
     
     
 }

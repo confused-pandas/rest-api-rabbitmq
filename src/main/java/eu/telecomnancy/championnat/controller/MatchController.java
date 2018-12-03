@@ -1,8 +1,10 @@
 package eu.telecomnancy.championnat.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,32 +19,36 @@ import eu.telecomnancy.championnat.Match;
 import eu.telecomnancy.championnat.controller.MatchController;
 import eu.telecomnancy.championnat.exception.MatchNotFoundException;
 import eu.telecomnancy.championnat.repository.MatchRepository;
+import eu.telecomnancy.championnat.assembler.MatchResourceAssembler;
 
 @RestController
 public class MatchController {
 	
-	private final MatchRepository repository;
+	private final MatchRepository matchRepository;
+	private final MatchResourceAssembler assembler;
 	
-	MatchController(MatchRepository repository) {
-		this.repository = repository;
+	MatchController(MatchRepository matchRepository, MatchResourceAssembler assembler) {
+		this.matchRepository = matchRepository;
+		this.assembler = assembler;
 	}
 	
 	@GetMapping("/matches")
-	List<Match> all() {
-		return repository.findAll();
-	}	
-	
-	@GetMapping("/matches/{id}")
-	Resource<Match> one(@PathVariable Long id) {
+	public
+	Resources<Resource<Match>> all() {
 
-		Match match = repository.findById(id)
-			.orElseThrow(() -> new MatchNotFoundException(id));
+		List<Resource<Match>> matches = matchRepository.findAll().stream()
+			.map(assembler::toResource)
+			.collect(Collectors.toList());
 
-		return new Resource<>(match,
-			linkTo(methodOn(MatchController.class).one(id)).withSelfRel(),
-			linkTo(methodOn(MatchController.class).all()).withRel("employees"));
+		return new Resources<>(matches,
+			linkTo(methodOn(MatchController.class).all()).withSelfRel());
 	}
 	
-	
+	@GetMapping("/matches/{id}")
+	public Resource<Match> one(@PathVariable Long id) {
+		Match match = matchRepository.findById(id)
+			.orElseThrow(() -> new MatchNotFoundException(id));
+		return assembler.toResource(match);
+	}	
 	
 }

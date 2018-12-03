@@ -30,7 +30,7 @@ public class Application {
 	public CommandLineRunner initDatabase(MatchRepository repository, EquipeRepository equipeRepository, CompetitionRepository competitionRepository) {
 		return (args) -> {
 			// save a couple of matches
-			repository.save(new Match("PSG", "OM", 1,0, 0L, 1L, Statut.FINI));
+			repository.save(new Match("PSG", "OM", 1,0, 11L, 12L, Statut.FINI));
 			repository.save(new Match("ASNL", "Nîmes Olympique", 2,1,2L,3L, Statut.FINI));
 			repository.save(new Match("ASNL", "PSG", 1,3,2L,0L, Statut.FINI));
 			repository.save(new Match("PSG", "OL", 3,0, 0L, 10L, Statut.FINI));
