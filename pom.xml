@@ -7,7 +7,7 @@
     <artifactId>championnat</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-
+   
     <name>championnat</name>
     <description>TP Spring</description>
     

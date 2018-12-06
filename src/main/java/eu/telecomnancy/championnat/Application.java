@@ -13,6 +13,16 @@ import eu.telecomnancy.championnat.repository.CompetitionRepository;
 import eu.telecomnancy.championnat.repository.EquipeRepository;
 import eu.telecomnancy.championnat.repository.MatchRepository;
 
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
+
+
+
 @SpringBootApplication
 public class Application {
 
@@ -21,6 +31,10 @@ public class Application {
 	public long[] listMatch = { 0L, 1L, 2L };
 	public long[] listEquipe2 = { 0L, 10L, 11L, 12L };
 	public long[] listMatch2 = { 3L, 4L, 5L };
+	
+    static final String topicExchangeName = "spring-boot-exchange";
+
+    static final String queueName = "spring-boot";
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class);
@@ -86,4 +100,36 @@ public class Application {
 			
 		};
 	}
+
+
+    @Bean
+    Queue queue() {
+        return new Queue(queueName, false);
+    }
+
+    @Bean
+    TopicExchange exchange() {
+        return new TopicExchange(topicExchangeName);
+    }
+
+    @Bean
+    Binding binding(Queue queue, TopicExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with("foo.bar.#");
+    }
+
+    @Bean
+    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
+            MessageListenerAdapter listenerAdapter) {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        container.setQueueNames(queueName);
+        container.setMessageListener(listenerAdapter);
+        return container;
+    }
+
+    @Bean
+    MessageListenerAdapter listenerAdapter(Receiver receiver) {
+        return new MessageListenerAdapter(receiver, "receiveMessage");
+    }
+
 }
