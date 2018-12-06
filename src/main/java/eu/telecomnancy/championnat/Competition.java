@@ -52,6 +52,7 @@ public class Competition {
 		this.nbMatch = nbMatch;
 	}
 
+	
 	public long[] getListeIdEquipe() {
 		return listeIdEquipe;
 	}
@@ -59,11 +60,11 @@ public class Competition {
 	public void setListeIdEquipe(long[] listeIdEquipe) {
 		this.listeIdEquipe = listeIdEquipe;
 	}
-
+	/*
 	public long[] getListeIdMatch() {
 		return listeIdMatch;
 	}
-
+	*/
 	public void setListeIdMatch(long[] listeIdMatch) {
 		this.listeIdMatch = listeIdMatch;
 	}

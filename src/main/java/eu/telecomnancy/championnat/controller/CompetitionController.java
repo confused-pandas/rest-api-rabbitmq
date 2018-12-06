@@ -27,6 +27,7 @@ public class CompetitionController {
 		this.repository = repository;
 		this.assembler = assembler;
 	}
+	@GetMapping("/competitions")
 	public
 	Resources<Resource<Competition>> all() {
 
