@@ -14,13 +14,15 @@ public class Equipe {
     private String nomEquipe;
     private String villeEquipe;
     private int nbPoints;
+    private long[] listIdMatch;
 
     protected Equipe() {}
 
-    public Equipe(String nomEquipe, String villeEquipe, int nbPoints) {
+    public Equipe(String nomEquipe, String villeEquipe, int nbPoints, long[] listIdMatch) {
     	this.nomEquipe = nomEquipe;
     	this.villeEquipe = villeEquipe;
     	this.nbPoints = nbPoints;
+    	this.listIdMatch = listIdMatch;
     }
 
     @Override
@@ -48,6 +50,10 @@ public class Equipe {
 
 	public Long getId() {
 		return idEquipe;
+	}
+	
+	public long[] getIdMatch() {
+		return listIdMatch;
 	}
     
 
