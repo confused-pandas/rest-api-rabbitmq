@@ -21,6 +21,23 @@ public class Application {
 	public long[] listMatch = { 0L, 1L, 2L };
 	public long[] listEquipe2 = { 0L, 10L, 11L, 12L };
 	public long[] listMatch2 = { 3L, 4L, 5L };
+	
+	// Matches des équipes
+	public long[] listMatchPsg = {1L, 3L, 4L, 6L};
+	public long[] listMatchOm = {1L};
+	public long[] listMatchAsnl = {2L,3L};
+	public long[] listMatchNimes = {2L};
+	public long[] listMatchBarca = {7L};
+	public long[] listMatchReal = {7L};
+	public long[] listMatchRoma = {8L};
+	public long[] listMatchNaples = {8L};
+	public long[] listMatchCaen = {9L};
+	public long[] listMatchToulouse = {9L};
+	public long[] listMatchOl = {4L};
+	public long[] listMatchLosc = {5L, 6L};
+	public long[] listMatchMontpel = {5L};
+	public long[] listMatchAsse = {10L};
+	public long[] listMatchDfco = {10L};
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class);
@@ -41,21 +58,21 @@ public class Application {
 			repository.save(new Match("Caen", "Toulouse", 5,3,8L,9L, Statut.REPORTE));
 			repository.save(new Match("DFCO", "ASSE", 5,3,8L,9L, Statut.PREVU));
 			
-			equipeRepository.save(new Equipe("PSG", "Paris", 42));
-			equipeRepository.save(new Equipe("OM", "Marseille", 20));
-			equipeRepository.save(new Equipe("ASNL", "Nancy", 5));
-			equipeRepository.save(new Equipe("Nîmes Olympique", "Nîmes", 9));
-			equipeRepository.save(new Equipe("FC Barcelone", "Barcelone", 45));
-			equipeRepository.save(new Equipe("Real Madrid", "Madrid", 48));
-			equipeRepository.save(new Equipe("AS Roma", "Rome", 6));
-			equipeRepository.save(new Equipe("Naples", "Naples", 12));
-			equipeRepository.save(new Equipe("Caen", "Caen", 6));
-			equipeRepository.save(new Equipe("Toulouse", "Toulouse", 12));
-			equipeRepository.save(new Equipe("OL", "Lyon", 34));
-			equipeRepository.save(new Equipe("LOSC", "Lille", 28));
-			equipeRepository.save(new Equipe("Montpellier", "Montpellier", 3));
-			equipeRepository.save(new Equipe("ASSE", "Saint-Etienne", 28));
-			equipeRepository.save(new Equipe("DFCO", "Dijon", 21));
+			equipeRepository.save(new Equipe("PSG", "Paris", 42, listMatchPsg));
+			equipeRepository.save(new Equipe("OM", "Marseille", 20, listMatchOm));
+			equipeRepository.save(new Equipe("ASNL", "Nancy", 5, listMatchAsnl));
+			equipeRepository.save(new Equipe("Nîmes Olympique", "Nîmes", 9, listMatchNimes));
+			equipeRepository.save(new Equipe("FC Barcelone", "Barcelone", 45, listMatchBarca));
+			equipeRepository.save(new Equipe("Real Madrid", "Madrid", 48, listMatchReal));
+			equipeRepository.save(new Equipe("AS Roma", "Rome", 6, listMatchRoma));
+			equipeRepository.save(new Equipe("Naples", "Naples", 12, listMatchNaples));
+			equipeRepository.save(new Equipe("Caen", "Caen", 6, listMatchCaen));
+			equipeRepository.save(new Equipe("Toulouse", "Toulouse", 12, listMatchToulouse));
+			equipeRepository.save(new Equipe("OL", "Lyon", 34, listMatchOl));
+			equipeRepository.save(new Equipe("LOSC", "Lille", 28, listMatchLosc));
+			equipeRepository.save(new Equipe("Montpellier", "Montpellier", 3, listMatchMontpel));
+			equipeRepository.save(new Equipe("ASSE", "Saint-Etienne", 28, listMatchAsse));
+			equipeRepository.save(new Equipe("DFCO", "Dijon", 21, listMatchDfco));
 			
 			competitionRepository.save(new Competition("Ligue 1", 3, listEquipe, listMatch));
 			competitionRepository.save(new Competition("Ligue 2", 3, listEquipe2, listMatch2));

@@ -30,13 +30,13 @@ import eu.telecomnancy.championnat.repository.MatchRepository;
 @RestController
 public class EquipeController {
 	
-	private final EquipeRepository repository;
+	private final EquipeRepository equipeRepository;
 	private final MatchRepository matchRepository;
 	private final MatchResourceAssembler matchAssembler;
 	private final EquipeResourceAssembler assembler;
 	
-	EquipeController(EquipeRepository repository, EquipeResourceAssembler assembler, MatchRepository matchRepository, MatchResourceAssembler matchAssembler) {
-		this.repository = repository;
+	EquipeController(EquipeRepository equipeRepository, EquipeResourceAssembler assembler, MatchRepository matchRepository, MatchResourceAssembler matchAssembler) {
+		this.equipeRepository = equipeRepository;
 		this.matchRepository = matchRepository;
 		this.matchAssembler = matchAssembler;
 		this.assembler = assembler;
@@ -45,7 +45,7 @@ public class EquipeController {
 	@GetMapping("/equipes")
 	public Resources<Resource<Equipe>> all() {
 
-		List<Resource<Equipe>> equipes = repository.findAll().stream()
+		List<Resource<Equipe>> equipes = equipeRepository.findAll().stream()
 			.map(assembler::toResource)
 			.collect(Collectors.toList());
 
@@ -56,23 +56,23 @@ public class EquipeController {
 	@GetMapping("/equipes/{id}")
 	public Resource<Equipe> one(@PathVariable Long id) {
 
-		Equipe equipe = repository.findById(id)
+		Equipe equipe = equipeRepository.findById(id)
 			.orElseThrow(() -> new EquipeNotFoundException(id));
 
 		return assembler.toResource(equipe);
 	}	
 	
 	@GetMapping("/matches/{id}/equipes")
-	public Resources<Resource<Equipe>> test(@PathVariable Long id) {
+	public Resources<Resource<Equipe>> findEquipeMatch(@PathVariable Long id) {
 
 		Match match = matchRepository.findById(id).orElseThrow(() -> new MatchNotFoundException(id));
 		Long idEquipeA = match.getIdEquipeA();
 		Long idEquipeB = match.getIdEquipeB();
 		System.out.println("Equipe A: "+idEquipeA);
 		
-		Equipe equipeA = repository.findById(idEquipeA)
+		Equipe equipeA = equipeRepository.findById(idEquipeA)
 				.orElseThrow(() -> new EquipeNotFoundException(idEquipeA));
-		Equipe equipeB = repository.findById(idEquipeB)
+		Equipe equipeB = equipeRepository.findById(idEquipeB)
 				.orElseThrow(() -> new EquipeNotFoundException(idEquipeB));
 		List<Equipe> equipes = new ArrayList<Equipe>();
 		List<Resource<Equipe>> equipesResources;
@@ -82,6 +82,27 @@ public class EquipeController {
 
 		return new Resources<>(equipesResources,
 				linkTo(methodOn(EquipeController.class).all()).withSelfRel());
+	
+	}	
+	
+	@GetMapping("/equipes/{id}/matches")
+	public Resources<Resource<Match>> test(@PathVariable Long id) {
+
+		Equipe equipe = equipeRepository.findById(id).orElseThrow(() -> new EquipeNotFoundException(id));
+		long[] idMatch = equipe.getIdMatch();
+		List<Match> matches = new ArrayList<Match>();
+		List<Resource<Match>> matchesResources;
+		
+		for (int i = 0; i < idMatch.length; i++) {
+			final int a = i;
+			Match match = matchRepository.findById(idMatch[i])
+			.orElseThrow(() -> new EquipeNotFoundException(idMatch[a]));
+			matches.add(match);
+		}
+		matchesResources = matches.stream().map(matchAssembler::toResource).collect(Collectors.toList());
+
+		return new Resources<>(matchesResources,
+				linkTo(methodOn(MatchController.class).all()).withSelfRel());
 	
 	}	
 }
