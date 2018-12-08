@@ -3,23 +3,36 @@ package eu.telecomnancy.championnat.controller;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import eu.telecomnancy.championnat.Equipe;
 import eu.telecomnancy.championnat.Match;
+import eu.telecomnancy.championnat.ResponseTransfer;
 import eu.telecomnancy.championnat.assembler.EquipeResourceAssembler;
 import eu.telecomnancy.championnat.assembler.MatchResourceAssembler;
 import eu.telecomnancy.championnat.exception.EquipeNotFoundException;
@@ -44,7 +57,6 @@ public class EquipeController {
 	
 	@GetMapping("/equipes")
 	public Resources<Resource<Equipe>> all() {
-
 		List<Resource<Equipe>> equipes = equipeRepository.findAll().stream()
 			.map(assembler::toResource)
 			.collect(Collectors.toList());
@@ -52,6 +64,15 @@ public class EquipeController {
 		return new Resources<>(equipes,
 			linkTo(methodOn(EquipeController.class).all()).withSelfRel());
 	}
+	
+	/*@RequestMapping(value = "/equipes", method = RequestMethod.POST)
+	public @ResponseBody ResponseTransfer newEquipe(Equipe newEquipe) throws URISyntaxException {
+		System.out.println(newEquipe.toString());
+		long[] listMatchDfco = {10L};
+		Resource<Equipe> resource = assembler.toResource(equipeRepository.save(new Equipe("Bayner", "Munich", 42, listMatchDfco)));
+		
+		return new ResponseTransfer("Transfer worked");
+	}*/
 	
 	@GetMapping("/equipes/{id}")
 	public Resource<Equipe> one(@PathVariable Long id) {
@@ -105,4 +126,13 @@ public class EquipeController {
 				linkTo(methodOn(MatchController.class).all()).withSelfRel());
 	
 	}	
+	
+	
+	@DeleteMapping("/equipes/{id}")
+	ResponseEntity<?> deleteEquipe(@PathVariable Long id) {
+
+		equipeRepository.deleteById(id);
+
+		return ResponseEntity.noContent().build();
+	}
 }

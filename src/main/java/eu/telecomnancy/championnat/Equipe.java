@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table(name="equipe")
 public class Equipe {
 
-    @Id
+	@Id
     @SequenceGenerator( name = "equipeSeq", sequenceName = "equipe_seq", allocationSize = 20, initialValue = 1 )
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="equipeSeq")
     private Long idEquipe;
@@ -60,5 +60,24 @@ public class Equipe {
 		return listIdMatch;
 	}
     
+    public void setIdEquipe(Long idEquipe) {
+		this.idEquipe = idEquipe;
+	}
+
+	public void setNomEquipe(String nomEquipe) {
+		this.nomEquipe = nomEquipe;
+	}
+
+	public void setVilleEquipe(String villeEquipe) {
+		this.villeEquipe = villeEquipe;
+	}
+
+	public void setNbPoints(int nbPoints) {
+		this.nbPoints = nbPoints;
+	}
+
+	public void setListIdMatch(long[] listIdMatch) {
+		this.listIdMatch = listIdMatch;
+	}
 
 }
