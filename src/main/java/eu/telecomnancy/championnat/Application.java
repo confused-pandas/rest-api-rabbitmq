@@ -46,18 +46,8 @@ public class Application {
 	@Bean
 	public CommandLineRunner initDatabase(MatchRepository repository, EquipeRepository equipeRepository, CompetitionRepository competitionRepository) {
 		return (args) -> {
-			// save a couple of matches
-			repository.save(new Match("PSG", "OM", 1,0, 11L, 12L, Statut.FINI));
-			repository.save(new Match("ASNL", "Nîmes Olympique", 2,1,2L,3L, Statut.FINI));
-			repository.save(new Match("ASNL", "PSG", 1,3,2L,0L, Statut.FINI));
-			repository.save(new Match("PSG", "OL", 3,0, 0L, 10L, Statut.FINI));
-			repository.save(new Match("LOSC", "Montpellier", 4,1,11L,12L, Statut.FINI));
-			repository.save(new Match("LOSC", "PSG", 2,5,11L,0L, Statut.FINI));
-			repository.save(new Match("FC Barcelone", "Real Madrid", 3,3,4L,5L, Statut.ENCOURS));
-			repository.save(new Match("AS Roma", "Naples", 4,2,6L,7L, Statut.PAUSE));
-			repository.save(new Match("Caen", "Toulouse", 5,3,8L,9L, Statut.REPORTE));
-			repository.save(new Match("DFCO", "ASSE", 5,3,8L,9L, Statut.PREVU));
 			
+			// save a couple of teams
 			equipeRepository.save(new Equipe("PSG", "Paris", 42, listMatchPsg));
 			equipeRepository.save(new Equipe("OM", "Marseille", 20, listMatchOm));
 			equipeRepository.save(new Equipe("ASNL", "Nancy", 5, listMatchAsnl));
@@ -73,6 +63,20 @@ public class Application {
 			equipeRepository.save(new Equipe("Montpellier", "Montpellier", 3, listMatchMontpel));
 			equipeRepository.save(new Equipe("ASSE", "Saint-Etienne", 28, listMatchAsse));
 			equipeRepository.save(new Equipe("DFCO", "Dijon", 21, listMatchDfco));
+			
+			// save a couple of matches
+			repository.save(new Match("PSG", "OM", 1,0, 1L, 2L, Statut.FINI));
+			repository.save(new Match("ASNL", "Nîmes Olympique", 2,1,3L,4L, Statut.FINI));
+			repository.save(new Match("ASNL", "PSG", 1,3,3L,1L, Statut.FINI));
+			repository.save(new Match("PSG", "OL", 3,0, 1L, 11L, Statut.FINI));
+			repository.save(new Match("LOSC", "Montpellier", 4,1,12L,13L, Statut.FINI));
+			repository.save(new Match("LOSC", "PSG", 2,5,12L,1L, Statut.FINI));
+			repository.save(new Match("FC Barcelone", "Real Madrid", 3,3,5L,6L, Statut.ENCOURS));
+			repository.save(new Match("AS Roma", "Naples", 4,2,6L,7L, Statut.PAUSE));
+			repository.save(new Match("Caen", "Toulouse", 5,3,8L,9L, Statut.REPORTE));
+			repository.save(new Match("DFCO", "ASSE", 5,3,14L,15L, Statut.PREVU));
+			
+
 			
 			competitionRepository.save(new Competition("Ligue 1", 3, listEquipe, listMatch));
 			competitionRepository.save(new Competition("Ligue 2", 3, listEquipe2, listMatch2));

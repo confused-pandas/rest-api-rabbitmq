@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class Equipe {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.TABLE)
     private Long idEquipe;
     private String nomEquipe;
     private String villeEquipe;
@@ -28,7 +28,7 @@ public class Equipe {
     @Override
     public String toString() {
         return String.format(
-                "Equipe[id=%d, nomEquipe='%s', villeEquipe='%s', nbPoints=%d]",
+                "Equipe[idEquipe=%d, nomEquipe='%s', villeEquipe='%s', nbPoints=%d]",
                 idEquipe, nomEquipe, villeEquipe, nbPoints);
     }
 

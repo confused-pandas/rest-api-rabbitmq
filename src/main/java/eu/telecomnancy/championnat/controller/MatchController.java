@@ -18,7 +18,9 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import eu.telecomnancy.championnat.Match;
 import eu.telecomnancy.championnat.controller.MatchController;
 import eu.telecomnancy.championnat.exception.MatchNotFoundException;
+import eu.telecomnancy.championnat.repository.EquipeRepository;
 import eu.telecomnancy.championnat.repository.MatchRepository;
+import eu.telecomnancy.championnat.assembler.EquipeResourceAssembler;
 import eu.telecomnancy.championnat.assembler.MatchResourceAssembler;
 
 @RestController
@@ -26,10 +28,14 @@ public class MatchController {
 	
 	private final MatchRepository matchRepository;
 	private final MatchResourceAssembler assembler;
+	private final EquipeRepository equipeRepository;
+	private final EquipeResourceAssembler equipeAssembler;
 	
-	MatchController(MatchRepository matchRepository, MatchResourceAssembler assembler) {
+	MatchController(MatchRepository matchRepository, MatchResourceAssembler assembler, EquipeRepository equipeRepository, EquipeResourceAssembler equipeAssembler) {
 		this.matchRepository = matchRepository;
 		this.assembler = assembler;
+		this.equipeRepository = equipeRepository;
+		this.equipeAssembler = equipeAssembler;
 	}
 	
 	@GetMapping("/matches")
