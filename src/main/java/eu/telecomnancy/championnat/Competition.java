@@ -6,12 +6,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="competition")
 public class Competition {
 	
     @Id
-    @GeneratedValue(strategy=GenerationType.TABLE)
+    @SequenceGenerator( name = "competitionSeq", sequenceName = "competition_seq", allocationSize = 20, initialValue = 1 )
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="competitionSeq")
     private Long idCompetition;
     private String nomCompetition;
     private int nbMatch;

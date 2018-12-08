@@ -4,12 +4,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="match")
 public class Match {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.TABLE)
+    @SequenceGenerator( name = "matchSeq", sequenceName = "match_seq", allocationSize = 20, initialValue = 1 )
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="matchSeq")
     private Long id;
     private String nomEquipeA;
     private String nomEquipeB;

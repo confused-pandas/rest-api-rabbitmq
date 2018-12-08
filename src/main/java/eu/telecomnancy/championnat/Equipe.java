@@ -4,12 +4,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="equipe")
 public class Equipe {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.TABLE)
+    @SequenceGenerator( name = "equipeSeq", sequenceName = "equipe_seq", allocationSize = 20, initialValue = 1 )
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="equipeSeq")
     private Long idEquipe;
     private String nomEquipe;
     private String villeEquipe;
@@ -28,7 +32,7 @@ public class Equipe {
     @Override
     public String toString() {
         return String.format(
-                "Equipe[idEquipe=%d, nomEquipe='%s', villeEquipe='%s', nbPoints=%d]",
+                "Equipe[id=%d, nomEquipe='%s', villeEquipe='%s', nbPoints=%d]",
                 idEquipe, nomEquipe, villeEquipe, nbPoints);
     }
 
