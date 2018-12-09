@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import eu.telecomnancy.championnat.Competition;
 import eu.telecomnancy.championnat.Equipe;
+import eu.telecomnancy.championnat.Match;
 import eu.telecomnancy.championnat.assembler.CompetitionResourceAssembler;
 import eu.telecomnancy.championnat.assembler.EquipeResourceAssembler;
 import eu.telecomnancy.championnat.assembler.MatchResourceAssembler;
@@ -65,24 +66,51 @@ public class CompetitionController {
 		return assembler.toResource(competition);
 	}
 	
-	/*@GetMapping("/competitions/{id}/equipes")
-	public Resource<Resource<Equipe>> res(@PathVariable Long id) {
+	
+	@GetMapping("/competitions/{id}/equipes")
+	public Resources<Resource<Equipe>> res(@PathVariable Long id) {
+
 		List<Equipe> equipes = new ArrayList<Equipe>();
 		List<Resource<Equipe>> equipesResources;
 		
 		Competition competition = repository.findById(id).orElseThrow(() -> new CompetitionNotFoundException(id));
 		long[] idEquipe = competition.getListeIdEquipe();
 
-		for (int i=0; i< idEquipe.length; i++){
-			Equipe equipe = repository.findById(idEquipe[i]) .orElseThrow(() -> new EquipeNotFoundException(idEquipe[i]));
+		for (int i = 0; i < idEquipe.length; i++) {
+			final int a = i;
+			Equipe equipe = equipeRepository.findById(idEquipe[i])
+			.orElseThrow(() -> new EquipeNotFoundException(idEquipe[a]));
 			equipes.add(equipe);
 		}
-		equipesResources = equipes.stream().map(assembler::toResource).collect(Collectors.toList());
+		equipesResources = equipes.stream().map(equipeAssembler::toResource).collect(Collectors.toList());
+
 		return new Resources<>(equipesResources,
 				linkTo(methodOn(EquipeController.class).all()).withSelfRel());
+	
+	}
+	
+	@GetMapping("/competitions/{id}/matches")
+	public Resources<Resource<Match>> test(@PathVariable Long id) {
+		
+		List<Match> matches = new ArrayList<Match>();
+		List<Resource<Match>> matchesResources;
+
+		Competition competition = repository.findById(id).orElseThrow(() -> new CompetitionNotFoundException(id));
+		long[] idMatch = competition.getListeIdMatch();
 		
 		
-	}*/
+		for (int i = 0; i < idMatch.length; i++) {
+			final int a = i;
+			Match match = matchRepository.findById(idMatch[i])
+			.orElseThrow(() -> new EquipeNotFoundException(idMatch[a]));
+			matches.add(match);
+		}
+		matchesResources = matches.stream().map(matchAssembler::toResource).collect(Collectors.toList());
+
+		return new Resources<>(matchesResources,
+				linkTo(methodOn(MatchController.class).all()).withSelfRel());
+	
+	}	
 
 	
 }
