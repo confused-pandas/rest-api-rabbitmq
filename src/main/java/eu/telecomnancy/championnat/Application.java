@@ -1,5 +1,8 @@
 package eu.telecomnancy.championnat;
 
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.TreeMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +21,11 @@ public class Application {
 
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 	public long[] listEquipe = { 1L, 2L, 3L, 4L };
-	public long[] listMatch = {  1L, 2L, 3L };
+	public long[] listMatch = {  1L, 2L, 3L, 11L };
 	public long[] listEquipe2 = { 1L, 11L, 12L, 13L };
 	public long[] listMatch2 = { 4L, 5L, 6L };
-	
+
+    
 	// Matches des équipes
 	public long[] listMatchPsg = {1L, 3L, 4L, 6L};
 	public long[] listMatchOm = {1L};
@@ -41,11 +45,25 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class);
+		
+		HashMap<Long, Integer> hm = new HashMap<Long, Integer>();
+
+		hm.put(1L, 7);
+		hm.put(2L, 0);
+		hm.put(3L, 7);
+		hm.put(4L, 0);
+		
+		Comparateur comp =  new Comparateur(hm);
+        TreeMap hm2 = new TreeMap(comp);
+        hm2.putAll(hm);
+        
 	}
 
 	@Bean
 	public CommandLineRunner initDatabase(MatchRepository repository, EquipeRepository equipeRepository, CompetitionRepository competitionRepository) {
 		return (args) -> {
+			
+			
 			
 			// save a couple of teams
 			equipeRepository.save(new Equipe("PSG", "Paris", 42, listMatchPsg)); //1
@@ -75,6 +93,7 @@ public class Application {
 			repository.save(new Match("AS Roma", "Naples", 4,2,6L,7L, Statut.PAUSE)); //8
 			repository.save(new Match("Caen", "Toulouse", 5,3,8L,9L, Statut.REPORTE));
 			repository.save(new Match("DFCO", "ASSE", 5,3,14L,15L, Statut.PREVU)); //10
+			repository.save(new Match("OM", "Nîmes Olympique", 2,0,2L,4L, Statut.FINI));
 			
 
 			
