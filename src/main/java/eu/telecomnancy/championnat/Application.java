@@ -21,7 +21,7 @@ public class Application {
 
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 	public long[] listEquipe = { 1L, 2L, 3L, 4L };
-	public long[] listMatch = {  1L, 2L, 3L, 11L };
+	public long[] listMatch = {  1L, 2L, 3L };
 	public long[] listEquipe2 = { 1L, 11L, 12L, 13L };
 	public long[] listMatch2 = { 4L, 5L, 6L };
 
@@ -45,17 +45,6 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class);
-		
-		HashMap<Long, Integer> hm = new HashMap<Long, Integer>();
-
-		hm.put(1L, 7);
-		hm.put(2L, 0);
-		hm.put(3L, 7);
-		hm.put(4L, 0);
-		
-		Comparateur comp =  new Comparateur(hm);
-        TreeMap hm2 = new TreeMap(comp);
-        hm2.putAll(hm);
         
 	}
 
