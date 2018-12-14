@@ -1,9 +1,5 @@
 package eu.telecomnancy.championnat;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.TreeMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,9 +1,8 @@
 package eu.telecomnancy.championnat;
 
-import java.util.Arrays;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.TreeMap;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,8 +37,7 @@ public class Competition {
 	@Override
 	public String toString() {
 		return "Competition [idCompetition=" + idCompetition + ", nomCompetition=" + nomCompetition + ", nbMatch="
-				+ nbMatch + ", listeIdEquipe=" + Arrays.toString(listeIdEquipe) + ", listeIdMatch="
-				+ Arrays.toString(listeIdMatch) + "]";
+				+ nbMatch + ", listeIdEquipe=" + listeIdEquipe + ", listeIdMatch=" + listeIdMatch + "]";
 	}
 
 	public Long getIdCompetition() {
