@@ -126,10 +126,9 @@ public class Application {
         container.setMessageListener(listenerAdapter);
         return container;
     }
-
-  /*  @Bean
+    @Bean
     MessageListenerAdapter listenerAdapter(Receiver receiver) {
         return new MessageListenerAdapter(receiver, "receiveMessage");
-    }*/
+    }
 
 }
