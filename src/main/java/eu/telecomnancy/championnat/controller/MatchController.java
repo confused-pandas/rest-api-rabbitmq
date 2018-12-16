@@ -1,5 +1,7 @@
 package eu.telecomnancy.championnat.controller;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,6 +59,29 @@ public class MatchController {
 			.orElseThrow(() -> new MatchNotFoundException(id));
 		return assembler.toResource(match);
 	}
+	
+	
+	@PostMapping("/matches")
+	ResponseEntity<?> newMatch(@RequestBody Match newMatch) throws URISyntaxException {
+
+		Resource<Match> resource = assembler.toResource(matchRepository.save(newMatch));
+
+		return ResponseEntity
+			.created(new URI(resource.getId().expand().getHref()))
+			.body(resource);
+	}
+	/*
+	 * curl -X POST localhost:880/matches -H 'Content-type:application/json' -d '{
+  "nomEquipeA": "PSG",
+  "nomEquipeB": "OM",
+  "scoreA": 5,
+  "scoreB": 4,
+  "idEquipeA": 1,
+  "idEquipeB": 2,
+  "statut": "FINI"}'
+
+	 */
+	
 	
 	@DeleteMapping("/matches/{id}")
 	ResponseEntity<?> deleteMatch(@PathVariable Long id) {
