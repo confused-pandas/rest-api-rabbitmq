@@ -1,9 +1,11 @@
+
 package eu.telecomnancy.championnat.controller;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +23,7 @@ import eu.telecomnancy.championnat.assembler.EquipeResourceAssembler;
 import eu.telecomnancy.championnat.assembler.MatchResourceAssembler;
 import eu.telecomnancy.championnat.exception.CompetitionNotFoundException;
 import eu.telecomnancy.championnat.exception.EquipeNotFoundException;
+import eu.telecomnancy.championnat.exception.MatchNotFoundException;
 import eu.telecomnancy.championnat.repository.CompetitionRepository;
 import eu.telecomnancy.championnat.repository.EquipeRepository;
 import eu.telecomnancy.championnat.repository.MatchRepository;
@@ -102,7 +105,7 @@ public class CompetitionController {
 		for (int i = 0; i < idMatch.length; i++) {
 			final int a = i;
 			Match match = matchRepository.findById(idMatch[i])
-			.orElseThrow(() -> new EquipeNotFoundException(idMatch[a]));
+			.orElseThrow(() -> new MatchNotFoundException(idMatch[a]));
 			matches.add(match);
 		}
 		matchesResources = matches.stream().map(matchAssembler::toResource).collect(Collectors.toList());
@@ -110,7 +113,44 @@ public class CompetitionController {
 		return new Resources<>(matchesResources,
 				linkTo(methodOn(MatchController.class).all()).withSelfRel());
 	
-	}	
+	}
+	
+	@GetMapping("/competitions/{id}/classement")
+	public Resources<Resource<Equipe>> test2(@PathVariable Long id) {
+		
+		List<Equipe> equipes = new ArrayList<Equipe>();
+		List<Equipe> equipesTriee = new ArrayList<Equipe>();
+		List<Integer> points = new ArrayList<Integer>();
+		List<Resource<Equipe>> equipesResources2;
+		
+		
+		Competition competition = repository.findById(id).orElseThrow(() -> new CompetitionNotFoundException(id));
+		long[] idEquipe = competition.getListeIdEquipe();
+				
+		for (int i = 0; i < idEquipe.length; i++) {
+			final int a = i;
+			Equipe equipe = equipeRepository.findById(idEquipe[i])
+			.orElseThrow(() -> new EquipeNotFoundException(idEquipe[a]));
+			equipes.add(equipe);
+			points.add(equipe.getNbPoints());			
+		}
+		for (int i = 0; i < (idEquipe.length-1); i++) {
+			int ind = points.indexOf(Collections.max(points));
+			equipesTriee.add(equipes.get(ind));
+			points.remove(ind);
+			equipes.remove(ind);
+		}
+		
+		equipesTriee.add(equipes.get(0));
+		
+		equipesResources2 = equipesTriee.stream().map(equipeAssembler::toResource).collect(Collectors.toList());
+
+		return new Resources<>(equipesResources2,
+				linkTo(methodOn(EquipeController.class).all()).withSelfRel());
+	}
+	
+
+	
 
 	
 }
