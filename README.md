@@ -15,34 +15,34 @@ Tester les GET
 
 Pour tester les requêtes GET, il faut écrire les commandes ci-dessous dans le champ Explorer, en remplaçant {id} par un nombre.
 
-/competitions/
+- /competitions/
 
-/competitions/{id}/
+- /competitions/{id}/
 
-/competitions/{id}/equipes/
+- /competitions/{id}/equipes/
 
-/competitions/{id}/matches/
+- /competitions/{id}/matches/
 
-/competitions/{id}/classement/ : on obtient la liste des équipes de la mieux classée à la moins classée
+- /competitions/{id}/classement/ : on obtient la liste des équipes de la mieux classée à la moins classée
 
-/matches/
+- /matches/
 
-/matches/{id}/
+- /matches/{id}/
 
-/matches/{id}/equipes
+- /matches/{id}/equipes
 
-/equipes/
+- /equipes/
 
-/equipes/{id}
+- /equipes/{id}
 
-/equipes/{id}/matches/
+- /equipes/{id}/matches/
 
 
 **************
 Tester les POST
 **************
 
-Ouvrir la console et exécuter le code suivant par exemple, il s'agit de l'ajout d'une nouvelle équipe :
+- Ouvrir la console et exécuter le code suivant par exemple, il s'agit de l'ajout d'une nouvelle équipe :
 
 curl -X POST localhost:8080/equipes -H 'Content-type:application/json' -d '{
   "nomEquipe": "test",
@@ -50,12 +50,13 @@ curl -X POST localhost:8080/equipes -H 'Content-type:application/json' -d '{
   "nbPoints": 7,
   "idMatch": [1, 3, 4, 6]}'
 
+- Vérifier le résultat sur le port 8080
 
 **************
 Tester les PUT 
 **************
 
-Ouvrir la console et exécuter les codes suivants par exemple
+Ouvrir la console et exécuter les codes suivants par exemple puis vérifier les résultats sur le port 8080
 
 - Modification du nombre de point d'une équipe :
 
@@ -81,11 +82,11 @@ curl -v -X PUT localhost:8080/matches/7 -H 'Content-Type:application/json' -d '{
 Tester les DELETE 
 ******************
 
-Ouvrir la console et exécuter le code suivant par exemple, il s'agit de la supression de l'équipe avec id=15.
+- Ouvrir la console et exécuter le code suivant par exemple, il s'agit de la supression de l'équipe avec id=15.
 
-- curl -v -X DELETE localhost:8080/equipes/15
+curl -v -X DELETE localhost:8080/equipes/15
 
-
+- Vérifier le résultat sur le port 8080
 
 2 - On veut pouvoir s'abonner au résultats en live d'une journée de championnat.
 
@@ -94,7 +95,8 @@ Nous avons rencontré quelques problèmes de connexion, notre travail se trouve 
 de peur de perdre notre travail fonctionnel.
 
 
-===========
+=========== 
+Enoncé du projet :
 A faire par groupe de 2
 
 Le but du TP est de réaliser une API REST pour une application permettant de gérer les scores de
