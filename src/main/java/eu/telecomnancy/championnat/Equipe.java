@@ -36,10 +36,6 @@ public class Equipe {
                 idEquipe, nomEquipe, villeEquipe, nbPoints);
     }
 
-	public Long getIdEquipe() {
-		return idEquipe;
-	}
-
 	public String getNomEquipe() {
 		return nomEquipe;
 	}

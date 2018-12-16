@@ -58,6 +58,18 @@ public class Match {
 		return scoreA;
 	}
 
+	public void setScoreA(int scoreA) {
+		this.scoreA = scoreA;
+	}
+
+	public void setScoreB(int scoreB) {
+		this.scoreB = scoreB;
+	}
+
+	public void setStatut(Statut statut) {
+		this.statut = statut;
+	}
+
 	public int getScoreB() {
 		return scoreB;
 	}
@@ -73,5 +85,10 @@ public class Match {
 	public Statut getStatut() {
 		return statut;
 	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 
 }

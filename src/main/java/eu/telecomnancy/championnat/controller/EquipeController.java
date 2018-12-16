@@ -91,6 +91,28 @@ public class EquipeController {
 		return assembler.toResource(equipe);
 	}	
 	
+	@PutMapping("/equipes/{id}")
+	ResponseEntity<?> replaceEquipe(@RequestBody Equipe newEquipe, @PathVariable Long id) throws URISyntaxException {
+
+		Equipe updatedEquipe = equipeRepository.findById(id)
+			.map(equipe -> {
+				equipe.setNomEquipe(newEquipe.getNomEquipe());
+				equipe.setNbPoints(newEquipe.getNbPoints());
+			//	equipe.setListIdMatch(newEquipe.getIdMatch());
+				return equipeRepository.save(equipe);
+			})
+			.orElseGet(() -> {
+				newEquipe.setIdEquipe(id);
+				return equipeRepository.save(newEquipe);
+			});
+
+		Resource<Equipe> resource = assembler.toResource(updatedEquipe);
+
+		return ResponseEntity
+			.created(new URI(resource.getId().expand().getHref()))
+			.body(resource);
+	}
+	
 	@GetMapping("/matches/{id}/equipes")
 	public Resources<Resource<Equipe>> findEquipeMatch(@PathVariable Long id) {
 

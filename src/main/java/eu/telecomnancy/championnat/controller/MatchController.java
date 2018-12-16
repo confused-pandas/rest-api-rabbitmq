@@ -68,6 +68,28 @@ public class MatchController {
 		return assembler.toResource(match);
 	}
 	
+	@PutMapping("/matches/{id}")
+	ResponseEntity<?> replaceMatch(@RequestBody Match newMatch, @PathVariable Long id) throws URISyntaxException {
+
+		Match updatedMatch = matchRepository.findById(id)
+			.map(match -> {
+				match.setScoreA(newMatch.getScoreA());
+				match.setScoreB(newMatch.getScoreB());
+				match.setStatut(newMatch.getStatut());
+				return matchRepository.save(match);
+			})
+			.orElseGet(() -> {
+				newMatch.setId(id);
+				return matchRepository.save(newMatch);
+			});
+
+		Resource<Match> resource = assembler.toResource(updatedMatch);
+
+		return ResponseEntity
+			.created(new URI(resource.getId().expand().getHref()))
+			.body(resource);
+	}
+	
 	@DeleteMapping("/matches/{id}")
 	ResponseEntity<?> deleteMatch(@PathVariable Long id) {
 

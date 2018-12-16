@@ -77,6 +77,10 @@ public class Competition {
 		return idCompetition;
 	}
 
+	public void setIdCompetition(Long idCompetition) {
+		this.idCompetition = idCompetition;
+	}
+
     
     
 }
