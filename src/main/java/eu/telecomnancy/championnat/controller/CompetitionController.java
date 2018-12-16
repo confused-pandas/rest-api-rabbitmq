@@ -4,6 +4,8 @@ package eu.telecomnancy.championnat.controller;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,8 +13,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import eu.telecomnancy.championnat.Competition;
@@ -61,6 +67,14 @@ public class CompetitionController {
 			linkTo(methodOn(CompetitionController.class).all()).withSelfRel());
 	}
 	
+	@PostMapping("/competitions")
+	ResponseEntity<?> newCompetition(@RequestBody Competition newCompetition) throws URISyntaxException {
+		Resource<Competition> resource = assembler.toResource(repository.save(newCompetition));
+		return ResponseEntity
+			.created(new URI(resource.getId().expand().getHref()))
+			.body(resource);
+	}
+	
 	@GetMapping("/competitions/{id}")
 	public Resource<Competition> one(@PathVariable Long id) {
 		
@@ -69,6 +83,13 @@ public class CompetitionController {
 		return assembler.toResource(competition);
 	}
 	
+	@DeleteMapping("/competitions/{id}")
+	ResponseEntity<?> deleteCompetition(@PathVariable Long id) {
+
+		repository.deleteById(id);
+
+		return ResponseEntity.noContent().build();
+	}
 	
 	@GetMapping("/competitions/{id}/equipes")
 	public Resources<Resource<Equipe>> res(@PathVariable Long id) {

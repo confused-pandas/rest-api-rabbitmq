@@ -1,5 +1,7 @@
 package eu.telecomnancy.championnat.controller;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,6 +51,14 @@ public class MatchController {
 
 		return new Resources<>(matches,
 			linkTo(methodOn(MatchController.class).all()).withSelfRel());
+	}
+	
+	@PostMapping("/matches")
+	ResponseEntity<?> newMatch(@RequestBody Match newMatch) throws URISyntaxException {
+		Resource<Match> resource = assembler.toResource(matchRepository.save(newMatch));
+		return ResponseEntity
+			.created(new URI(resource.getId().expand().getHref()))
+			.body(resource);
 	}
 	
 	@GetMapping("/matches/{id}")

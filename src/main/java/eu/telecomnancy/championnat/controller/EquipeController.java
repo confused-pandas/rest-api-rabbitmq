@@ -65,6 +65,14 @@ public class EquipeController {
 			linkTo(methodOn(EquipeController.class).all()).withSelfRel());
 	}
 	
+	@PostMapping("/equipes")
+	ResponseEntity<?> newEquipe(@RequestBody Equipe newEquipe) throws URISyntaxException {
+		Resource<Equipe> resource = assembler.toResource(equipeRepository.save(newEquipe));
+		return ResponseEntity
+			.created(new URI(resource.getId().expand().getHref()))
+			.body(resource);
+	}
+	
 	/*@RequestMapping(value = "/equipes", method = RequestMethod.POST)
 	public @ResponseBody ResponseTransfer newEquipe(Equipe newEquipe) throws URISyntaxException {
 		System.out.println(newEquipe.toString());
